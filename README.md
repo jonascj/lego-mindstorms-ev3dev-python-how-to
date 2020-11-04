@@ -331,12 +331,12 @@ from both the Command Prompt (cmd.exe) and the PowerShell:
 If it is not available to you or continue to cause you trouble you can
 install PuTTY and use the `pscp` command it provides instead:
 
-* Download and install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html),
+1. Download and install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html),
    e.g. putty-0.74-installer.msi.
 
-* Restart your PowerShell (or close it and start a new one)
+2. Restart your PowerShell (or close it and start a new one)
 
-* Use the command `pscp -P 22 robot@<ev3 ip address>:` instead (note the `:`),
+3. Use the command `pscp -P 22 robot@<ev3 ip address>:` instead (note the `:`),
   e.g. `pscp -P 22 robot@192.168.1.202:`.
 
 Somewhere around 2018-2019 Microsoft started including OpenSSH utilities in Windows 10,
