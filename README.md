@@ -286,7 +286,7 @@ Another option is to run the program from the menus on the EV3 display
 ev3dev comes with a Python module which allows easy control 
 of the EV3 motors and sensors.
 
-Connect two **large motors** to output A and B:
+Connect two **large motors** to output A and D:
 
 <img alt="Photograph of motor ports A, B, C, D" src="docs/motor-ports.jpg" height="200">
 
