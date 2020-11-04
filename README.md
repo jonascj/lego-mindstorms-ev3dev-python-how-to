@@ -93,10 +93,15 @@ issue the following command
 ssh robot@<ev3 ip address>
 ```
 
+```
+ssh robot@192.168.1.202
+```
+
+
 The first time you connect you will likely see a prompt like
 
 ```
-The authenticity of host '10.13.37.101 (10.13.37.101)' can't be established.
+The authenticity of host '192.168.1.202 (192.168.1.202)' can't be established.
 ECDSA key fingerprint is SHA256:sNNNlUWTtDtWX0CbCLcC83h8Yohuql2x2f6elfXKf+c.
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
@@ -107,7 +112,7 @@ it is an important concept).
 
 Proceed to type in the default ev3dev password (for the user robot)
 which is `maker` and press [Enter]. 
-Note you will likely not see any characters as you type.
+**Note** you will likely not see any characters as you type.
 
 The process is complete once you see the following prompt in your terminal
 
@@ -120,7 +125,7 @@ Linux ev3dev 4.14.117-ev3dev-2.3.5-ev3 #1 PREEMPT Sat Mar 7 12:54:39 CST 2020 ar
   \___| \_/ |____/ \__,_|\___| \_/
 
 Debian stretch on LEGO MINDSTORMS EV3!
-Last login: Thu Oct 29 17:45:03 2020 from 10.13.37.13
+Last login: Thu Oct 29 13:37:00 2020 from 192.168.1.2
 robot@ev3dev:~$
 ```
 
@@ -135,6 +140,7 @@ Try a few:
 * ping 8.8.8.8
 * touch newfile.txt
 * wget https://www.random.org/integers/?num=10&min=1&max=6&col=1&base=10&format=plain&rnd=new
+* git clone https://github.com/jonascj/lego-mindstorms-ev3dev-python-how-to.git
 
 # Change password
 Change the default password 
@@ -153,21 +159,24 @@ close your terminal and connect again with ssh using your new password.
 
 In order for ev3dev and EV3 to run a Python program 
 a Python file needs to be created on or transfered to the ev3dev filesystem. 
-There are several ways to do this.
+There are several ways to do this:
 
-## TL;DR; Using the ev3dev shell and a command line editor
-If you are **experienced** with **linux** or the **command line in general**
-you can write and execute programs like this:
+* If you are **experienced** with **linux** or the **command line in general**
+  you can start here: [ev3dev shell and a command line editor](#ev3dev-shell-and-a-command-line-editor)
+
+* Otherwise have a look at this worklow: [Local text editor and scp](#local-text-editor-and-scp)
+
+## ev3dev shell and a command line editor
 
 1. Create and edit a .py file with editors vim or nano
 (or any other CLI way of writing files)
 
-2. Execute the program as `micropython <file.py>` 
+2. Execute the program as `micropython <file>`, e.g. `micropython test.py`.
 
-3. If you perform `chmod +x <file.py>` (and have the proper shebang in your file)
-you can also execute the program from the menu `File Browser` on the EV3.
+   If you perform `chmod +x <file>` (and have the proper shebang in your file)
+   you can also execute the program from the menu `File Browser` on the EV3.
 
-Try something like:
+Try a test / hello-world program like this:
 
 ```
 #!/usr/bin/env micropython
@@ -177,10 +186,11 @@ for i in range(10):
 time.sleep(2)
 ```
 
-## Using your local text editor and scp
+## Local text editor and scp
 In this workflow you'll be creating Python proggrams
-in your usual (maybe graphical) text editor / IDE 
-and transfering them to the ev3dev using a command line utility called scp.
+in your usual text editor / IDE (IDLE, Notepad++, Visual Studio Code etc.)
+and transfering them to the ev3dev using a command line utility called **scp**
+(secure copy protocol):
 
 1. Create a Python file with the following content 
    somewhere meaningful in your local filesystem / on your local storage.
@@ -198,17 +208,29 @@ and transfering them to the ev3dev using a command line utility called scp.
    issue the following command which transfers the file to your EV3:
 
    ```
-   scp <file.py> robot@<ev3 ip address>
+   scp <file> robot@<ev3 ip address>:
    ```
+
+   ```
+   scp test.py robot@192.168.1.202:
+   ```
+
+   Note the `:` and the end of the command.
 
    You'll be asked the password for the user robot 
    (hopefully it is not `maker` since you changed it, right?).
+
+   **Note for Windows**: If the `scp` command causes 
+   you trouble see [Note on scp for Windows](#note-on-scp-for-windows)
 
 3. From an ev3dev shell verify the file is there by using `ls -l`
 
 
 Now the program is ready to be executed by the ev3dev/EV3.
 There are two ways of doing this:
+
+ * [Run from command line](#run-from-command-line)
+ * [Run from EV3 menus (brickman)](#run-from-ev3-menus-brickman)
 
 ### Run from command line
 In some respects the easiest way of executing a program is
@@ -219,13 +241,17 @@ from the command line (the ev3dev shell).
 2. Run the program by issuing the command
 
    ```
-   micropython <file.py>
+   micropython <file>
+   ```
+
+   ```
+   micropython test.py
    ```
 
 Any output (from ``print()``) will be shown in the ev3dev shell
 as will any errors.
 
-### Run from the EV3 menus (brickman)
+### Run from EV3 menus (brickman)
 Another option is to run the program from the menus on the EV3 display
 (called brickman, short for brick manager).
 
@@ -233,8 +259,17 @@ Another option is to run the program from the menus on the EV3 display
    From an ev3dev shell issue the command
    
    ```
-   chmod +x <file.py>
+   chmod +x <file>
    ```
+   
+   ```
+   chmod +x test.py
+   ```
+   
+   You can verify permissions with the command `ls -l`,
+   your file should be listed as `-rwxr-xr-x ... test.py` (note the `x`s).
+   
+
 2. Use the `File Browser` menu on the EV3 display 
    to select and thereby execute your file.
 
@@ -246,7 +281,8 @@ Another option is to run the program from the menus on the EV3 display
    at the end to keep the output visible for 2 seconds.
 
 
-# Using Python to control motors and sensors
+
+# First Python program to control motors and sensors
 ev3dev comes with a Python module which allows easy control 
 of the EV3 motors and sensors.
 
@@ -258,10 +294,55 @@ Connect a **color sensor** to any input port:
 
 <img alt="Photograph of sensor ports 1, 2, 3, 4" src="docs/sensor-ports.jpg" height="200">
 
-Try (and review) the program `examples/test-motor-colorsensor.py`.
+Try (and review) the program `test-motor-colorsensor.py` from the [examples folder](examples/).
 
 It turns the two motors slowly and prints the color sensor value.
 The program can be stopped by pressing any of the buttons on the EV3
 or by pressing [ctrl]+[c] in the ev3dev shell
 (if running the program from the command line).
 
+# Important resources
+Before proceeding any further note that this how-to is based
+upon the following resources. 
+In times of need or when you outgrow this how-to you should visit them.
+
+**ev3dev github repository:** 
+[https://github.com/ev3dev/ev3dev-lang-python](https://github.com/ev3dev/ev3dev-lang-python)
+
+**ev3dev library/module documentation:**
+[https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/](https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/)
+
+**ev3dev endorsed guides:**
+[http://ev3python.com/](http://ev3python.com/)
+
+
+
+# Note on scp for Windows
+
+The scp command *might* not be available in Windows per default.
+
+I've personally found it avilable in the following versions of Windows 10,
+working exactly like described in this how-to, 
+from both the Command Prompt (cmd.exe) and the PowerShell:
+
+* Windows 10 Home, version 1809, build 17763.253, installed 06-01-2019, PowerShell version 5.1.17763.134
+* Windows 10 Home, version 20H2, build 19042.508, installed 03-11-2020, PowerShell version 5.1.19041.1
+
+If it is not available to you or continue to cause you trouble you can
+install PuTTY and use the `pscp` command it provides instead:
+
+* Download and install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html),
+   e.g. putty-0.74-installer.msi.
+
+* Restart your PowerShell (or close it and start a new one)
+
+* Use the command `pscp -P 22 robot@<ev3 ip address>:` instead (note the `:`),
+  e.g. `pscp -P 22 robot@192.168.1.202:`.
+
+Somewhere around 2018-2019 Microsoft started including OpenSSH utilities in Windows 10,
+including scp.
+So the output of the command `scp` should be 
+```
+scp 	[-346ABCpqrTv] [-c cipher] [-F ssh_config] [-i identity_file] [-J destination] [-l limit] [-o ssh_option] [-P port] [-S program] source ... target
+```
+Just like [OpenSSH scp utility](https://man.openbsd.org/scp.1).
