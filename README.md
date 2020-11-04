@@ -329,6 +329,16 @@ In times of need or when you outgrow this how-to you should visit them.
 [http://ev3python.com/](http://ev3python.com/)
 
 
+# Controlling motors 
+
+## Driving a tank
+A popular and fun thing to build is a driving base like this:
+
+<img alt="Mindstorms EV3 driving base" src="docs/lego-mindstorms-driving-base.jpg" height="400">
+
+TODO: movetank.py and movesteering.py in [examples folder](examples/).
+
+
 
 # Note on scp for Windows
 
