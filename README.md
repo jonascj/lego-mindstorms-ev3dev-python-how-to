@@ -176,6 +176,13 @@ There are several ways to do this:
    If you perform `chmod +x <file>` (and have the proper shebang in your file)
    you can also execute the program from the menu `File Browser` on the EV3.
 
+   **Recommendation**: Consider adding the `#!/usr/bin/env micropython` shebang to your files,
+   making them executable with `chmod +x <file>` and
+   executing your programs using the ev3dev utility **brickrun**: 
+   `brickrun file.py`. 
+   If your program crashes or you terminate it with [ctrl]+[c]
+   motors are still stopped by the brickrun utility (which is nice).
+
 Try a test / hello-world program like this:
 
 ```
@@ -250,6 +257,12 @@ from the command line (the ev3dev shell).
 
 Any output (from ``print()``) will be shown in the ev3dev shell
 as will any errors.
+
+**Recommendation:** Make your files executable by with the command
+`chmod +x <file>` (e.g. `chmod +x test.py`) and 
+run/execute your programs like this: `brickrun test.py`
+(instead of `micropython <file>`, 
+it turns the motors off in case of errors or you pressing [ctrl]+[c]).
 
 ### Run from EV3 menus (brickman)
 Another option is to run the program from the menus on the EV3 display
