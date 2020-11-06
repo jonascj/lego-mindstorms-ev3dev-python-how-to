@@ -336,7 +336,34 @@ A popular and fun thing to build is a driving base like this:
 
 <img alt="Mindstorms EV3 driving base" src="docs/lego-mindstorms-driving-base.jpg" height="400">
 
-TODO: movetank.py and movesteering.py in [examples folder](examples/).
+It has to be controlled or steered like a tank,
+changing direction by changing the relative rotational velocity of the wheels
+(or tracks).
+
+The ev3dev library offers two ways to drive a tank, demonstrated here:
+
+* [examples/movetank.py](examples/movetank.py)
+
+* [examples/movesteering.py](examples/movesteering.py)
+
+
+# Sensors
+
+## Color sensor
+<img alt="Mindstorms EV3 color sensor" src="docs/colorsensor.jpg" height="200">
+
+The following example program demonstrates the various color sensor modes:
+
+[examples/colorsensor.py](examples/colorsensor.py)
+
+
+
+## Ultrasonic range sensor
+<img alt="Mindstorms EV3 Ultrasonic range sensor" src="docs/ultrasonicsensor.jpg" height="200">
+
+The following example program demonstrates how the ultrasonic sensor can be used:
+
+[examples/ultrasonicsensor.py](examples/ultrasonicsensor.py)
 
 
 
