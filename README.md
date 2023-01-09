@@ -44,7 +44,7 @@ and a boot screen with an EV3DEV logo.
 Once the boot process is complete the display will look like this
 and the LEDs will be green.
 
-<img src="docs/brickman-boot-complete.jpg" height="200">
+<img src="docs/brickman-boot-complete.png" height="200">
 
 # Connect to a wireless network
 Using the menus and buttons to connect to a wireless network.
@@ -57,32 +57,36 @@ Button `[2]` goes back
 
 1. Navigate to `Wireless and Networks` >> `Wi-Fi`
 
-2. Select `Start Scan` to scan for available networks
+2. Select `Powered  [ ]` to enable and power the wireless network adapter
 
-3. Select your desired wireless network from the list.
+3. Select `Start Scan` to scan for available networks
 
-   <img src="docs/brickman-wifi-list.jpg" height="200">
+4. Select your desired wireless network from the list.
 
-4. Select `Connect` 
+   <img src="docs/brickman-wifi-list.png" height="200">
 
-5. If your network protected by a passphrase you'll see
+5. Select `Connect` 
+
+6. If your network protected by a passphrase you'll see
    a dialog `Please enter passphrase for <network name>`.
+
+   <img src="docs/brickman-wifi-passphrase-prompt.png" height="200">
 
    Press button `[1]` once to access an on-screen keyboard.
 
-   <img src="docs/brickman-passphrase-keyboard.jpg" height="200">
+   <img src="docs/brickman-passphrase-keyboard.png" height="200">
 
    Use the buttons to type in your passphrase.
 
    Use the tabs `[ABC]` and `[abc]` to get lower and upper case letters,
    `[123]` to get numbers and `[!@#]` to get special characters.
 
-   Finish by selectin `[OK]` and `[Accept]`.
+   Finish by selecting `[OK]` and `[Accept]`.
 
 6. The IP address assigned to your EV3 (by the DHCP server of the network)
-   can now be seen in the top of the display, e.g. 192.168.1.202.
+   can now be seen in the top of the display, e.g. 192.168.2.88.
 
-   <img src="docs/brickman-ip-address.jpg" height="200">
+   <img src="docs/brickman-ip-address.png" height="200">
 
    
 # Connect to your robot using SSH
