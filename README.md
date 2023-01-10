@@ -88,8 +88,194 @@ Button `[2]` goes back
 
    <img src="docs/brickman-ip-address.png" height="200">
 
+# Workflow: VS Code
+
+*Note: If you prefer a pure command line workflow see the section
+[Workflow: Command line](#workflow-command-line)*
+
+## Installation
+
+Download and install VS Code: https://code.visualstudio.com/Download
+
+Install the extension `ev3dev.ev3dev-browser`
+by pressing `[Ctrl]`+`[P]`,
+pasting the command `ext install ev3dev.ev3dev-browser`
+and pressing `[Enter]`:
+
+<img src="docs/vscode-install-ext.png">
+
+## Connect to the EV3
+1. Open the **EXPLORER** panel by pressing `[Ctrl]`+`[Shift]`+`[E]` 
+   (macOS: `[Cmd]`+`[Shift]`+`[E]`)
+
+2. Unfold **EV3DEV DEVICE BROWSER** 
+   and click *Click here to connect ...*
+
+   <img src="docs/vscode-ev3dev-browser-connect.png">
+
+3. Select your device from the dropdown list
+   (it can take 2-10 seconds for the list to show your device).
+   The default device name is `ev3dev`
+   but your device might have a different name.
+
+   <img src="docs/vscode-ev3dev-browser-list-devices.png">
+
+4. If your device does not use the default password (`maker`),
+   you will have to enter your device's password.
+
+   <img src="docs/vscode-ev3dev-browser-password.png">
+
+   **Note** If you fail to connect by entering the password multiple
+   times you might need to add your password to the settings.json file:
+
+   1. Press `[Ctrl]` + `[Shift]` + `[P]`, skriv `user settings json`
+      og vælg *Open User Settings (JSON)*.
+
+      <img src="docs/vscode-ev3dev-browser-settings-json.png">
    
-# Connect to your robot using SSH
+   2. A file called `settings.json` is opened. 
+      Change the text `"ev3devBrowser.password": ""`
+      to `"ev3devBrowser.password": "y0urp455w0rd"`
+      and save the file (`[Ctrl]` + `[S]`)
+
+   3. Try to connect to your device again
+
+## Transfer files to the EV3
+
+1. Create a new folder to hold the files (programs) 
+   you will be creating and transferring to the EV3,
+   e.g. `projects/ev3programs`.
+
+2. Open this folder in VS Code by pressing `File` > `Open Folder`
+   (`[Ctrl]`+`[K]` followed by `[Ctrl]`+`[O]`)
+   and selecting the folder you've just created.
+   
+3. Create a new file by pressing `[Ctrl]`+`[N]`, 
+   add the following 5 lines of code and save it as `hello.py`
+
+   ``` python
+   #!/usr/bin/env micropython
+   import time
+   for i in range(10):
+       print("Hello", i)
+   time.sleep(2)
+   ```
+
+4. Transfer the files to the EV3 by pressing the 
+   ``Send workspace to device``
+
+   <img src="docs/vscode-ev3dev-browser-transfer.png">
+
+5. The file `hello.py` should now be visible in the *EV3DEV DEVICE BROWSER*.
+
+
+## Run programs
+
+### Output in VS Code 
+Right-click on the file `hello.py` in the *EV3DEV DEVICE BROWSER*
+and choose *Run in interactive terminal*.
+
+This is the easiest way to test and debug programs,
+since the output and any errors are displayed in the VS Code terminal.
+
+<img src="docs/vscode-ev3dev-browser-run.png">
+
+### Output on EV3-screen
+Right-click on the file `hello.py` in the *EV3DEV DEVICE BROWSER*
+and choose *Run*.
+
+<img src="docs/brickman-hello-output.png">
+
+
+### Using only the EV3
+Programs (once transfer to the EV3) can be run by using the
+*File Browser* on the EV3:
+
+Errors are not shown anywhere, but written to a file on the EV3
+called `hello.py.err.log` (if the file run was `hello.py`).
+To see the error message(s) this file will have to be transferred 
+to the computer by right-clicking it in the *EV3DEV DEVICE BROWSER*
+and choosing *Upload*.
+
+<img src="docs/brickman-filebrowser-run.png">
+
+
+
+
+# First Python program to control motors and sensors
+ev3dev comes with a Python module which allows easy control 
+of the EV3 motors and sensors.
+
+Connect two **large motors** to output A and D:
+
+<img alt="Photograph of motor ports A, B, C, D" src="docs/motor-ports.jpg" height="200">
+
+Connect a **color sensor** to any input port:
+
+<img alt="Photograph of sensor ports 1, 2, 3, 4" src="docs/sensor-ports.jpg" height="200">
+
+Try (and review) the program `test-motor-colorsensor.py` from the [examples folder](examples/).
+
+It turns the two motors slowly and prints the color sensor value.
+The program can be stopped by pressing any of the buttons on the EV3
+or by pressing [ctrl]+[c] in the ev3dev shell
+(if running the program from the command line).
+
+# Important resources
+Before proceeding any further note that this how-to is based
+upon the following resources. 
+In times of need or when you outgrow this how-to you should visit them.
+
+**ev3dev github repository:** 
+[https://github.com/ev3dev/ev3dev-lang-python](https://github.com/ev3dev/ev3dev-lang-python)
+
+**ev3dev library/module documentation:**
+[https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/](https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/)
+
+**ev3dev endorsed guides:**
+[http://ev3python.com/](http://ev3python.com/)
+
+
+# Controlling motors 
+
+## Driving a tank
+A popular and fun thing to build is a driving base like this:
+
+<img alt="Mindstorms EV3 driving base" src="docs/lego-mindstorms-driving-base.jpg" height="400">
+
+It has to be controlled or steered like a tank,
+changing direction by changing the relative rotational velocity of the wheels
+(or tracks).
+
+The ev3dev library offers two ways to drive a tank, demonstrated here:
+
+* [examples/movetank.py](examples/movetank.py)
+
+* [examples/movesteering.py](examples/movesteering.py)
+
+
+# Sensors
+
+## Color sensor
+<img alt="Mindstorms EV3 color sensor" src="docs/colorsensor.jpg" height="200">
+
+The following example program demonstrates the various color sensor modes:
+
+[examples/colorsensor.py](examples/colorsensor.py)
+
+
+
+## Ultrasonic range sensor
+<img alt="Mindstorms EV3 Ultrasonic range sensor" src="docs/ultrasonicsensor.jpg" height="200">
+
+The following example program demonstrates how the ultrasonic sensor can be used:
+
+[examples/ultrasonicsensor.py](examples/ultrasonicsensor.py)
+
+   
+# Workflow: Command line
+
+## Connect to your robot using SSH
 From the command line (Windows Powershell, macOS Terminal, Linux shell/terminal)
 issue the following command
 
@@ -146,7 +332,7 @@ Try a few:
 * wget https://www.random.org/integers/?num=10&min=1&max=6&col=1&base=10&format=plain&rnd=new
 * git clone https://github.com/jonascj/lego-mindstorms-ev3dev-python-how-to.git
 
-# Change password
+## Change password
 Change the default password 
 (as you should do with all new devices)
 by issuing the command
@@ -159,7 +345,7 @@ It will aks you for you current password (`maker`) and a new password (twice).
 After you see the message `passwd: password updated successfully`
 close your terminal and connect again with ssh using your new password.
 
-# Your first Python program for your EV3
+## Your first Python program for your EV3
 
 In order for ev3dev and EV3 to run a Python program 
 a Python file needs to be created on or transfered to the ev3dev filesystem. 
@@ -170,7 +356,7 @@ There are several ways to do this:
 
 * Otherwise have a look at this worklow: [Local text editor and scp](#local-text-editor-and-scp)
 
-## ev3dev shell and a command line editor
+### ev3dev shell and a command line editor
 
 1. Create and edit a .py file with editors vim or nano
 (or any other CLI way of writing files)
@@ -197,7 +383,7 @@ for i in range(10):
 time.sleep(2)
 ```
 
-## Local text editor and scp
+### Local text editor and scp
 In this workflow you'll be creating Python proggrams
 in your usual text editor / IDE (IDLE, Notepad++, Visual Studio Code etc.)
 and transfering them to the ev3dev using a command line utility called **scp**
@@ -298,76 +484,6 @@ Another option is to run the program from the menus on the EV3 display
    at the end to keep the output visible for 2 seconds.
 
 
-
-# First Python program to control motors and sensors
-ev3dev comes with a Python module which allows easy control 
-of the EV3 motors and sensors.
-
-Connect two **large motors** to output A and D:
-
-<img alt="Photograph of motor ports A, B, C, D" src="docs/motor-ports.jpg" height="200">
-
-Connect a **color sensor** to any input port:
-
-<img alt="Photograph of sensor ports 1, 2, 3, 4" src="docs/sensor-ports.jpg" height="200">
-
-Try (and review) the program `test-motor-colorsensor.py` from the [examples folder](examples/).
-
-It turns the two motors slowly and prints the color sensor value.
-The program can be stopped by pressing any of the buttons on the EV3
-or by pressing [ctrl]+[c] in the ev3dev shell
-(if running the program from the command line).
-
-# Important resources
-Before proceeding any further note that this how-to is based
-upon the following resources. 
-In times of need or when you outgrow this how-to you should visit them.
-
-**ev3dev github repository:** 
-[https://github.com/ev3dev/ev3dev-lang-python](https://github.com/ev3dev/ev3dev-lang-python)
-
-**ev3dev library/module documentation:**
-[https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/](https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/)
-
-**ev3dev endorsed guides:**
-[http://ev3python.com/](http://ev3python.com/)
-
-
-# Controlling motors 
-
-## Driving a tank
-A popular and fun thing to build is a driving base like this:
-
-<img alt="Mindstorms EV3 driving base" src="docs/lego-mindstorms-driving-base.jpg" height="400">
-
-It has to be controlled or steered like a tank,
-changing direction by changing the relative rotational velocity of the wheels
-(or tracks).
-
-The ev3dev library offers two ways to drive a tank, demonstrated here:
-
-* [examples/movetank.py](examples/movetank.py)
-
-* [examples/movesteering.py](examples/movesteering.py)
-
-
-# Sensors
-
-## Color sensor
-<img alt="Mindstorms EV3 color sensor" src="docs/colorsensor.jpg" height="200">
-
-The following example program demonstrates the various color sensor modes:
-
-[examples/colorsensor.py](examples/colorsensor.py)
-
-
-
-## Ultrasonic range sensor
-<img alt="Mindstorms EV3 Ultrasonic range sensor" src="docs/ultrasonicsensor.jpg" height="200">
-
-The following example program demonstrates how the ultrasonic sensor can be used:
-
-[examples/ultrasonicsensor.py](examples/ultrasonicsensor.py)
 
 
 
